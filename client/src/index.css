@@ -1,0 +1,241 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ===== Custom Base Styles ===== */
+@layer base {
+  :root {
+    --color-primary: 99 102 241;
+    --color-amber: 245 158 11;
+    --color-danger: 239 68 68;
+    --color-success: 16 185 129;
+    --color-surface: 250 250 249;
+    scroll-behavior: smooth;
+  }
+
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    @apply bg-surface-light dark:bg-surface-dark text-slate-800 dark:text-slate-100 font-sans transition-colors duration-300;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display font-semibold leading-tight;
+  }
+
+  * {
+    @apply box-border;
+  }
+
+  ::selection {
+    @apply bg-primary-200 dark:bg-primary-700 text-primary-900 dark:text-primary-100;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    @apply bg-transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply bg-slate-300 dark:bg-slate-600 rounded-full;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary-300 dark:bg-primary-500;
+  }
+}
+
+/* ===== Custom Components ===== */
+@layer components {
+  /* ---- Buttons ---- */
+  .btn {
+    @apply inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl font-medium text-sm transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed select-none;
+  }
+  .btn-primary {
+    @apply btn bg-primary-600 hover:bg-primary-700 active:bg-primary-800 text-white focus-visible:ring-primary-500 shadow-sm hover:shadow-glow;
+  }
+  .btn-secondary {
+    @apply btn bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 border border-slate-200 dark:border-slate-700 focus-visible:ring-primary-500 shadow-sm;
+  }
+  .btn-ghost {
+    @apply btn hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300 focus-visible:ring-primary-500;
+  }
+  .btn-danger {
+    @apply btn bg-red-500 hover:bg-red-700 text-white focus-visible:ring-red-500;
+  }
+  .btn-amber {
+    @apply btn bg-amber-500 hover:bg-amber-600 active:bg-amber-700 text-white focus-visible:ring-amber-400 shadow-sm hover:shadow-glow-amber;
+  }
+  .btn-sm {
+    @apply px-3 py-1.5 text-xs rounded-lg;
+  }
+  .btn-lg {
+    @apply px-6 py-3 text-base rounded-2xl;
+  }
+  .btn-icon {
+    @apply btn p-2 rounded-xl;
+  }
+
+  /* ---- Cards ---- */
+  .card {
+    @apply bg-white dark:bg-slate-800 rounded-2xl shadow-card border border-slate-100 dark:border-slate-700/50 transition-all duration-200;
+  }
+  .card-hover {
+    @apply card hover:shadow-card-hover hover:-translate-y-0.5 cursor-pointer;
+  }
+
+  /* ---- Inputs ---- */
+  .input {
+    @apply w-full px-4 py-2.5 rounded-xl border border-slate-200 dark:border-slate-600 bg-white dark:bg-slate-800 text-slate-800 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all duration-200 text-sm;
+  }
+  .input-error {
+    @apply border-red-500 focus:ring-red-400;
+  }
+
+  /* ---- Labels ---- */
+  .label {
+    @apply block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1.5;
+  }
+
+  /* ---- Badges ---- */
+  .badge {
+    @apply inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-medium;
+  }
+  .badge-primary {
+    @apply badge bg-primary-100 dark:bg-primary-900/40 text-primary-700 dark:text-primary-300;
+  }
+  .badge-amber {
+    @apply badge bg-amber-100 dark:bg-amber-900/40 text-amber-700 dark:text-amber-300;
+  }
+  .badge-success {
+    @apply badge bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-300;
+  }
+  .badge-danger {
+    @apply badge bg-red-100 dark:bg-red-900/40 text-red-700 dark:text-red-300;
+  }
+  .badge-slate {
+    @apply badge bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-300;
+  }
+
+  /* ---- Skeleton Loader ---- */
+  .skeleton {
+    @apply bg-gradient-to-r from-slate-200 via-slate-100 to-slate-200 dark:from-slate-700 dark:via-slate-600 dark:to-slate-700 rounded-lg animate-shimmer;
+    background-size: 200% 100%;
+  }
+
+  /* ---- Gradient Text ---- */
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary-600 to-primary-400 bg-clip-text text-transparent;
+  }
+  .gradient-text-amber {
+    @apply bg-gradient-to-r from-amber-500 to-amber-400 bg-clip-text text-transparent;
+  }
+
+  /* ---- Section ---- */
+  .section {
+    @apply py-12 md:py-16 lg:py-20;
+  }
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  /* ---- Divider ---- */
+  .divider {
+    @apply border-t border-slate-200 dark:border-slate-700;
+  }
+
+  /* ---- Glass ---- */
+  .glass {
+    @apply bg-white/70 dark:bg-slate-900/70 backdrop-blur-md border border-white/20 dark:border-slate-700/30;
+  }
+
+  /* ---- Tag chip ---- */
+  .tag-chip {
+    @apply inline-flex items-center px-2 py-0.5 rounded-md text-xs font-medium bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 border border-primary-100 dark:border-primary-800/50 hover:bg-primary-100 dark:hover:bg-primary-900/50 transition-colors cursor-pointer;
+  }
+
+  /* ---- Page heading ---- */
+  .page-title {
+    @apply text-2xl md:text-3xl font-display font-bold text-slate-900 dark:text-white;
+  }
+  .page-subtitle {
+    @apply text-slate-500 dark:text-slate-400 mt-1;
+  }
+
+  /* ---- Stat number ---- */
+  .stat-number {
+    @apply text-2xl font-display font-bold text-slate-900 dark:text-white;
+  }
+  .stat-label {
+    @apply text-xs text-slate-500 dark:text-slate-400 mt-0.5;
+  }
+}
+
+/* ===== Utilities ===== */
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ===== Animations ===== */
+.animate-in {
+  animation: fadeIn 0.3s ease-out, slideUp 0.35s ease-out;
+}
+
+/* ===== Gradient backgrounds ===== */
+.hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.15) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 80% 50%, rgba(245,158,11,0.08) 0%, transparent 60%);
+}
+
+.dark .hero-gradient {
+  background: radial-gradient(ellipse 80% 60% at 50% -10%, rgba(99,102,241,0.25) 0%, transparent 70%),
+              radial-gradient(ellipse 50% 40% at 80% 50%, rgba(245,158,11,0.12) 0%, transparent 60%);
+}
+
+/* Bronze/Silver/Gold badge gradient */
+.badge-bronze {
+  background: linear-gradient(135deg, #cd7f32, #a05a1a);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.badge-silver {
+  background: linear-gradient(135deg, #c0c0c0, #808080);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.badge-gold {
+  background: linear-gradient(135deg, #ffd700, #b8860b);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* File type colors */
+.type-notes { @apply text-primary-600 bg-primary-50 dark:bg-primary-900/30 dark:text-primary-300; }
+.type-paper { @apply text-amber-600 bg-amber-50 dark:bg-amber-900/30 dark:text-amber-300; }
+.type-assignment { @apply text-emerald-600 bg-emerald-50 dark:bg-emerald-900/30 dark:text-emerald-300; }
+.type-lab { @apply text-violet-600 bg-violet-50 dark:bg-violet-900/30 dark:text-violet-300; }
+.type-cheat { @apply text-rose-600 bg-rose-50 dark:bg-rose-900/30 dark:text-rose-300; }
+
+/* Gradient card bg */
+.card-gradient-primary {
+  background: linear-gradient(135deg, rgba(99,102,241,0.06) 0%, rgba(99,102,241,0.02) 100%);
+}
+
+/* React hot toast override */
+.react-hot-toast-container > div {
+  font-family: 'Inter', sans-serif;
+}
