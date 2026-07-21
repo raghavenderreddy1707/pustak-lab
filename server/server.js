@@ -18,14 +18,26 @@ import { errorHandler, notFound } from './src/middleware/errorHandler.js'
 
 const app = express()
 
-// ===== Connect Database Middleware =====
-app.use(async (req, res, next) => {
-  try {
-    await connectDB()
-    next()
-  } catch (err) {
-    next(err)
+// ===== Connect Database at Startup =====
+try {
+  await connectDB()
+} catch (err) {
+  console.error('Failed to connect to database:', err.message)
+  if (process.env.VERCEL !== '1') {
+    process.exit(1)
   }
+}
+
+// ===== Ensure Database Connection Middleware =====
+app.use(async (req, res, next) => {
+  if (!connectDB.isConnected && process.env.MONGODB_URI) {
+    try {
+      await connectDB()
+    } catch (err) {
+      return next(err)
+    }
+  }
+  next()
 })
 
 // ===== Security Middleware =====
