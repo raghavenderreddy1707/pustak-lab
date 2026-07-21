@@ -18,22 +18,19 @@ import { errorHandler, notFound } from './src/middleware/errorHandler.js'
 
 const app = express()
 
-// ===== Connect Database at Startup =====
-try {
-  await connectDB()
-} catch (err) {
-  console.error('Failed to connect to database:', err.message)
-  if (process.env.VERCEL !== '1') {
-    process.exit(1)
-  }
-}
+// ===== Ensure Database Connection (will retry per-request) =====
+// Start connection attempt in background (don't await - Vercel needs app to export immediately)
+connectDB().catch(err => {
+  console.error('Initial DB connection failed (will retry on first request):', err.message)
+})
 
 // ===== Ensure Database Connection Middleware =====
 app.use(async (req, res, next) => {
-  if (!connectDB.isConnected && process.env.MONGODB_URI) {
+  if (!connectDB.isConnected() && process.env.MONGODB_URI) {
     try {
       await connectDB()
     } catch (err) {
+      console.error('DB connection error in middleware:', err.message)
       return next(err)
     }
   }
