@@ -1,0 +1,11 @@
+# Exclude client and root files
+../client
+../api
+../.git
+../.gitignore
+../README.md
+../vercel-config
+node_modules
+.env.example
+*.log
+.DS_Store
