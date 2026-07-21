@@ -50,6 +50,40 @@ export default function AuthPage() {
 
   const currentForm = mode === 'login' ? loginForm : registerForm
 
+  // Handle Google OAuth callback tokens from URL
+  useEffect(() => {
+    const accessToken = searchParams.get('accessToken')
+    const refreshToken = searchParams.get('refreshToken')
+    const error = searchParams.get('error')
+
+    if (error === 'google_failed') {
+      toast.error('Google sign-in failed. Please try again.')
+      return
+    }
+
+    if (accessToken && refreshToken) {
+      // Store tokens and fetch user profile
+      localStorage.setItem('accessToken', accessToken)
+      localStorage.setItem('refreshToken', refreshToken)
+
+      authAPI.getMe()
+        .then((res) => {
+          setAuth({
+            user: res.data.data,
+            accessToken,
+            refreshToken,
+          })
+          toast.success(`Welcome, ${res.data.data.name.split(' ')[0]}!`)
+          navigate('/dashboard')
+        })
+        .catch(() => {
+          toast.error('Failed to fetch profile. Please login again.')
+          localStorage.removeItem('accessToken')
+          localStorage.removeItem('refreshToken')
+        })
+    }
+  }, [searchParams])
+
   const handleLogin = async (data) => {
     setIsLoading(true)
     try {
