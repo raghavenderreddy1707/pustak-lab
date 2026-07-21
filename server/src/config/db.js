@@ -7,6 +7,11 @@ const connectDB = async () => {
     return
   }
 
+  if (!process.env.MONGODB_URI) {
+    console.error('❌ MONGODB_URI is missing from environment variables!')
+    return
+  }
+
   try {
     const conn = await mongoose.connect(process.env.MONGODB_URI, {
       maxPoolSize: 10,

@@ -18,8 +18,15 @@ import { errorHandler, notFound } from './src/middleware/errorHandler.js'
 
 const app = express()
 
-// ===== Connect Database =====
-connectDB()
+// ===== Connect Database Middleware =====
+app.use(async (req, res, next) => {
+  try {
+    await connectDB()
+    next()
+  } catch (err) {
+    next(err)
+  }
+})
 
 // ===== Security Middleware =====
 app.use(helmet({
@@ -67,7 +74,7 @@ app.use(passportModule.initialize())
 
 // ===== Health Check =====
 app.get('/api/health', (req, res) => {
-  res.json({ success: true, message: 'Pustak Lab API is running 🚀', env: process.env.NODE_ENV })
+  res.json({ success: true, message: 'Pustak Lab API is running 🚀', env: process.env.NODE_ENV || 'production' })
 })
 
 // ===== API Routes =====
