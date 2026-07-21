@@ -12,12 +12,13 @@ build/
 .vercel/
 **/.vercel/
 
-# Environment files - strictly ignore real secrets
+# Environment files & Local Vercel Config - strictly ignore real secrets
 .env
 .env.local
 .env.*.local
 *.env
 **/*.env
+vercel-config/
 !.env.example
 !**/.env.example
 
