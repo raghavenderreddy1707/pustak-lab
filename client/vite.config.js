@@ -10,6 +10,11 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  build: {
+    outDir: 'dist',
+    target: 'esnext',
+    minify: 'terser',
+  },
   server: {
     port: 5173,
     proxy: {
