@@ -72,7 +72,20 @@ if (process.env.NODE_ENV === 'development') {
 // ===== Passport =====
 app.use(passportModule.initialize())
 
-// ===== Health Check =====
+// ===== Root & Health Check Routes =====
+app.get('/', (req, res) => {
+  res.json({
+    success: true,
+    message: '🚀 Pustak Lab Backend API is live!',
+    version: '1.0.0',
+    endpoints: {
+      health: '/api/health',
+      notes: '/api/notes',
+      auth: '/api/auth',
+    },
+  })
+})
+
 app.get('/api/health', (req, res) => {
   res.json({ success: true, message: 'Pustak Lab API is running 🚀', env: process.env.NODE_ENV || 'production' })
 })
